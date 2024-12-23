@@ -67,10 +67,6 @@ export const ReviewsList = (props) => {
     }
   }, []);
 
-  useEffect(() => {
-    const ownReview = SessionStorage.getItem("ownReview");
-  }, [router]);
-
   return (
     <View style={styles.wrapper}>
       <ReviewsSectionOverview score={score} total={total} />
@@ -215,8 +211,6 @@ const AddRating = () => {
           style={styles.ratingStarItemWrapper}
           onPress={() => {
             const rating = index + 1;
-
-            SessionStorage.setItem("reviewRating", rating);
 
             SessionStorage.setItem(
               "ownReview",

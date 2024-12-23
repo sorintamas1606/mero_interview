@@ -27,9 +27,6 @@ import { PageHeader } from "@/components";
 import { PAGE_SLUG } from "@/constants";
 
 export default function ReviewPage() {
-  // const reviewRating = SessionStorage.getItem("reviewRating");
-  // const reviewDescription = SessionStorage.getItem("reviewDescription");
-
   const {
     rating: reviewRating,
     description: reviewDescription,
@@ -72,7 +69,6 @@ export default function ReviewPage() {
                   description={description}
                   onChangeDescription={onChangeDescription}
                 />
-                {/* <View style={{ height: 100 }} /> */}
               </View>
 
               <Pressable
@@ -87,15 +83,6 @@ export default function ReviewPage() {
                   borderRadius: 24,
                 }}
                 onPress={() => {
-                  SessionStorage.setItem(
-                    "reviewRating",
-                    reviewRating
-                  );
-                  SessionStorage.setItem(
-                    "reviewDescription",
-                    description
-                  );
-
                   SessionStorage.setItem(
                     "ownReview",
                     JSON.stringify({

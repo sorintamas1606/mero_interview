@@ -40,19 +40,11 @@ export default function ProfilePage() {
   const { pageSlug }: { pageSlug: string } =
     useLocalSearchParams();
 
-  console.log(`pageSlug = ${pageSlug}`);
-
   useEffect(() => {
-    console.log("profile.tsx on MOUNT");
-
     getProfileData(pageSlug).then(({ data }) => {
       setProfileDetails(data);
     });
   }, []);
-
-  useEffect(() => {
-    console.log("profile.tsx updated");
-  });
 
   if (!profileDetails)
     return (

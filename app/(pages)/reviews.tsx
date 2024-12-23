@@ -16,23 +16,27 @@ import { REVIEWS_PER_PAGE } from "@/constants";
 
 import { getReviewsForPage } from "@/api";
 
-import { PublicFeedbackDetails } from "@/types";
+import {
+  PublicFeedbackDetails,
+  OwnReviewProps,
+} from "@/types";
 
 import SessionStorage from "react-native-session-storage";
 
 export default function Reviews(props) {
-  // when loading the review page we try to get the data from the
   const data = SessionStorage.getItem("ratingOverview");
 
-  // get the details from SessionStorage
   const { name, score, total, pageId } = JSON.parse(data);
+
+  const [ownReview, setOwnReview] =
+    useState<OwnReviewProps | null>(null);
   const [reviews, setReviews] = useState<
     PublicFeedbackDetails[]
   >([]);
   const [loading, setLoading] = useState(false);
   const [nextCursor, setNextCursor] = useState<
     string | undefined
-  >(""); // Cursor for pagination
+  >("");
 
   const latestFetchedCursor = useRef<string | null>(null);
 
@@ -54,7 +58,6 @@ export default function Reviews(props) {
       })
       .finally(() => {
         setLoading(false);
-        // setInitialLoad(false);
       });
   };
 
@@ -68,6 +71,15 @@ export default function Reviews(props) {
 
   useEffect(() => {
     fetchData();
+
+    const _rating = SessionStorage.getItem("ownReview");
+
+    let reviewRating, reviewDescription;
+
+    if (_rating) {
+      ({ rating, description } = JSON.parse(_rating));
+      setOwnReview({ rating, description });
+    }
   }, []);
 
   const renderItem = ({
@@ -123,6 +135,16 @@ export default function Reviews(props) {
                 score={score}
                 total={total}
               />
+              {ownReview ? (
+                <ReviewCard
+                  firstName="Joe"
+                  lastName="Doe"
+                  rating={ownReview.rating}
+                  description={ownReview.description}
+                  ownReview
+                  setOwnReview={setOwnReview}
+                />
+              ) : null}
             </View>
           }
           onEndReached={() => {

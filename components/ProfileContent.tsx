@@ -38,9 +38,6 @@ export const ProfileContent = (
   const local = useLocalSearchParams();
 
   useEffect(() => {
-    // const reviewRating = SessionStorage.getItem("reviewRating");
-    // const reviewDescription = SessionStorage.getItem("reviewDescription");
-
     if (local.showToast === "true") {
       Toast.show({
         type: "success",

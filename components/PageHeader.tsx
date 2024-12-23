@@ -23,7 +23,17 @@ export const PageHeader = (props) => {
       <Pressable
         style={styles.imageWrapper}
         onPress={() => {
-          SessionStorage.removeItem("reviewRating");
+          const ownReview =
+            SessionStorage.getItem("ownReview");
+
+          if (ownReview) {
+            const { description } = JSON.parse(ownReview);
+
+            // remove the review only before adding it the first time
+            if (description === undefined) {
+              SessionStorage.removeItem("ownReview");
+            }
+          }
 
           router.replace({
             pathname: "/profile",
